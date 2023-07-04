@@ -10,7 +10,7 @@ type LoggerOptions<TLogData extends LogData> = {
 };
 
 export class Logger<TLogData extends LogData = LogData> implements ILogger {
-  protected constructor(private readonly options: LoggerOptions<TLogData>) {}
+  constructor(private readonly options: LoggerOptions<TLogData>) {}
 
   warning(message: string, params?: LogParams): void {
     this.notify(LogType.Warning, message, params);
