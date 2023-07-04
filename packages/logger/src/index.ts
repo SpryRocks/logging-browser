@@ -1,2 +1,3 @@
 export {ILogger} from './ILogger';
-export {Logger} from './Logger';
+export {ILoggerFactory} from './ILoggerFactory';
+export {LoggerFactory} from './LoggerFactory';

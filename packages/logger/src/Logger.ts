@@ -2,14 +2,16 @@ import {ILogger, TagOptions} from './ILogger';
 import {LogData, LogParams, LogType} from '@spryrocks/logging-browser-core';
 import {ILoggerNotifier} from '@spryrocks/logging-browser-observer';
 
+export type PrepareLogData<TLogData extends LogData> = (data: LogData) => TLogData;
+
 type LoggerOptions<TLogData extends LogData> = {
   notifier: ILoggerNotifier<TLogData>;
-  prepareLogData: (data: LogData) => TLogData;
+  prepareLogData: PrepareLogData<TLogData>;
   tag: string | undefined;
   logParams: LogParams | undefined;
 };
 
-export class Logger<TLogData extends LogData = LogData> implements ILogger {
+export class Logger<TLogData extends LogData> implements ILogger {
   constructor(private readonly options: LoggerOptions<TLogData>) {}
 
   warning(message: string, params?: LogParams): void {
