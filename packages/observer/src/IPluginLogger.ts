@@ -1,5 +1,5 @@
-import {LogData} from "@spryrocks/logging-browser-core";
+import {LogData} from '@spryrocks/logging-browser-core';
 
 export interface ILoggerReceiver<TData extends LogData> {
-    onLogReceived: (data: TData) => void;
+  onLogReceived: (data: TData) => void;
 }

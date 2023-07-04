@@ -15,7 +15,8 @@
   "scripts": {
     "lint": "yarn run eslint",
     "build": "npm run clean && tsc && rollup -c rollup.config.js",
-    "clean": "rimraf ./dist"
+    "clean": "rimraf ./dist",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@spryrocks/eslint-config": "^0.2.8-alpha.0",

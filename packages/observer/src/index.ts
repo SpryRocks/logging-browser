@@ -1,1 +1,1 @@
-export {}
+export {ILoggerReceiver} from './IPluginLogger';

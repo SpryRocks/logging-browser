@@ -6,7 +6,7 @@
   ],
   "scripts": {
     "lerna:bootstrap": "lerna bootstrap",
-    "lerna:publish": "lerna publish --no-verify-access from-package",
+    "lerna:publish": "lerna publish --no-verify-access",
     "lint": "lerna run lint",
     "compile": "lerna run compile",
     "build": "lerna run build",

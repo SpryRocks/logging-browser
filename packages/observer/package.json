@@ -1,6 +1,6 @@
 {
   "name": "@spryrocks/logging-browser-observer",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.1-alpha.1",
   "description": "Logging browser interface",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -15,10 +15,11 @@
   "scripts": {
     "lint": "yarn run eslint",
     "build": "npm run clean && tsc && rollup -c rollup.config.js",
-    "clean": "rimraf ./dist"
+    "clean": "rimraf ./dist",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@spryrocks/logging-browser-core": "0.0.1-alpha.0"
+    "@spryrocks/logging-browser-core": "0.0.1-alpha.2"
   },
   "devDependencies": {
     "@spryrocks/eslint-config": "^0.2.8-alpha.0",
