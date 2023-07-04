@@ -1,0 +1,18 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "lerna:bootstrap": "lerna bootstrap",
+    "lerna:publish": "lerna publish --no-verify-access from-package",
+    "lint": "lerna run lint",
+    "compile": "lerna run compile",
+    "build": "lerna run build",
+    "compile:native": "lerna run compile:native --stream"
+  },
+  "devDependencies": {
+    "lerna": "^7.1.1"
+  }
+}
