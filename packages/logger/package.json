@@ -1,5 +1,5 @@
 {
-  "name": "@spryrocks/logging-browser-logger-interface",
+  "name": "@spryrocks/logging-browser-logger",
   "version": "0.0.3-alpha.6",
   "description": "Logging browser interface",
   "main": "dist/plugin.cjs.js",
