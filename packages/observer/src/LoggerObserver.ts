@@ -14,7 +14,8 @@ export class LoggerObserver<TLogData extends LogData>
 
   notify(data: TLogData) {
     for (let receiver of this.receivers) {
-      if (receiver.onLogReceived(data)) return;
+      if (receiver.onLogReceived(data)) return true;
     }
+    return false;
   }
 }
