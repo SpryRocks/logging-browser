@@ -447,11 +447,6 @@
   resolved "https://registry.yarnpkg.com/@spryrocks/logging-browser-core/-/logging-browser-core-0.0.1-alpha.2.tgz#bbcb291907f659b6cfb4c874c3b214aa6e3c395a"
   integrity sha512-T1ju/5MVBaa4Hx3aGscy7FRFvrczfjSc+gCJitRlDfJHVNNuTLi7T0N7GwAZIwUW5YZl4PzPAz3yxXEMvhvHwA==
 
-"@spryrocks/logging-browser-core@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@spryrocks/logging-browser-core/-/logging-browser-core-0.0.2.tgz#59cc92a473e2f181836b1b26f5ad7692df743ba7"
-  integrity sha512-CLcBP1pYQfl33OxbTUtacJ37WH7bHdlbP5WL1iLFqrP+aVZ79WT0Ql1VK9rE8bwLSLmbuZEjGfux0XRtynFM7A==
-
 "@spryrocks/prettier-config@^0.2.8-alpha.0":
   version "0.2.8-alpha.0"
   resolved "https://registry.yarnpkg.com/@spryrocks/prettier-config/-/prettier-config-0.2.8-alpha.0.tgz#2bee155be129ca13c824e54755453371d0d40dbc"
