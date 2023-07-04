@@ -18,6 +18,10 @@
     "clean": "rimraf ./dist",
     "prepublishOnly": "npm run build"
   },
+  "dependencies": {
+    "@spryrocks/logging-browser-core": "^0.0.2",
+    "@spryrocks/logging-browser-observer": "^0.0.3-alpha.2"
+  },
   "devDependencies": {
     "@spryrocks/eslint-config": "^0.2.8-alpha.0",
     "rimraf": "^5.0.1",
