@@ -3,7 +3,7 @@ import {ILoggerObserver} from './ILoggerObserver';
 import {ILoggerReceiver} from './ILoggerReceiver';
 import {LogData} from '@spryrocks/logging-browser-core';
 
-export class LoggerObserver<TLogData extends LogData>
+export class LoggerObserver<TLogData extends LogData = LogData>
   implements ILoggerObserver<TLogData>, ILoggerNotifier<TLogData>
 {
   private readonly receivers: ILoggerReceiver<TLogData>[] = [];
