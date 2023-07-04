@@ -1,6 +1,6 @@
 {
   "name": "@spryrocks/logging-browser-logger",
-  "version": "0.0.3-alpha.9",
+  "version": "0.0.3-alpha.10",
   "description": "Logging browser interface",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -19,7 +19,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@spryrocks/logging-browser-core": "^0.0.2",
+    "@spryrocks/logging-browser-core": "^0.0.3-alpha.10",
     "@spryrocks/logging-browser-observer": "^0.0.3-alpha.2"
   },
   "devDependencies": {
