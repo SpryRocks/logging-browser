@@ -1,5 +1,6 @@
 import {LoggerFactory as CoreLoggerFactory, ILoggerFactory} from '@spryrocks/logger';
 import {
+  ILoggerNotifier,
   ILoggerObserver,
   ILoggerReceiver,
   LogData,
@@ -20,4 +21,5 @@ export {
   LogData,
   LogType,
   LogParams,
+  ILoggerNotifier,
 };
