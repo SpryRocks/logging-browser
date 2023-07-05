@@ -1,6 +1,5 @@
 import {ILogger, TagOptions} from './ILogger';
-import {LogData, LogParams, LogType} from '@spryrocks/logging-browser-core';
-import {ILoggerNotifier} from '@spryrocks/logging-browser-observer';
+import {ILoggerNotifier, LogData, LogParams, LogType} from '@spryrocks/logger-observer';
 
 export type PrepareLogData<TLogData extends LogData> = (data: LogData) => TLogData;
 

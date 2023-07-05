@@ -1,4 +1,4 @@
-import {LogParams} from '@spryrocks/logging-browser-core';
+import {LogParams} from '@spryrocks/logger-observer';
 
 export type TagOptions = {keepParams?: boolean};
 

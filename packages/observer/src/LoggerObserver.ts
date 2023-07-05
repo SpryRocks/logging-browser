@@ -1,7 +1,7 @@
 import {ILoggerNotifier} from './ILoggerNotifier';
 import {ILoggerObserver} from './ILoggerObserver';
 import {ILoggerReceiver} from './ILoggerReceiver';
-import {LogData} from '@spryrocks/logging-browser-core';
+import {LogData} from '@spryrocks/logger-core';
 
 export class LoggerObserver<TLogData extends LogData = LogData>
   implements ILoggerObserver<TLogData>, ILoggerNotifier<TLogData>

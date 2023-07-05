@@ -1,8 +1,7 @@
+import {ILoggerNotifier, LogData} from '@spryrocks/logger-observer';
 import {Logger, PrepareLogData} from './Logger';
 import {ILogger} from './ILogger';
 import {ILoggerFactory} from './ILoggerFactory';
-import {ILoggerNotifier} from '@spryrocks/logging-browser-observer';
-import {LogData} from '@spryrocks/logging-browser-core';
 
 type LoggerFactoryOptions<TLogData extends LogData> = {
   notifier: ILoggerNotifier<TLogData>;

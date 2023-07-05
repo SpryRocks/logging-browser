@@ -1,6 +1,6 @@
 {
-  "name": "@spryrocks/logger-core",
-  "version": "0.0.1",
+  "name": "@spryrocks/logger-plugin",
+  "version": "0.0.3-alpha.14",
   "description": "Logging browser interface",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -18,6 +18,10 @@
     "clean": "rimraf ./dist",
     "prepublishOnly": "npm run build"
   },
+  "dependencies": {
+    "@spryrocks/logger": "^0.0.1",
+    "@spryrocks/logger-plugin-observer": "^0.0.1"
+  },
   "devDependencies": {
     "@spryrocks/eslint-config": "^0.2.8-alpha.0",
     "rimraf": "^5.0.1",
@@ -26,6 +30,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "gitHead": "b3305cbf750696e6062aa12b73ec0d5b604c8cf1"
+  }
 }
