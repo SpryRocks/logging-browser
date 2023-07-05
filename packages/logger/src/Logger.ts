@@ -1,15 +1,18 @@
 import {ILogger, TagOptions} from './ILogger';
 import {ILoggerNotifier, LogData, LogParams, LogType} from '@spryrocks/logger-observer';
 
-export interface LoggerDelegate<TLogData extends LogData> {
-  prepareLogData(data: LogData): TLogData;
+export interface LoggerDelegate<
+  TLogData extends LogData,
+  TGlobalData extends object | undefined,
+> {
+  prepareLogData(options: {data: LogData; globalData: TGlobalData}): TLogData;
 }
 
 type LoggerSetup<TLogData extends LogData, TGlobalData extends object | undefined> = {
   notifier: ILoggerNotifier<TLogData>;
   tag: string | undefined;
   logParams: LogParams | undefined;
-  delegate: LoggerDelegate<TLogData>;
+  delegate: LoggerDelegate<TLogData, TGlobalData>;
   globalData: TGlobalData;
 };
 
@@ -60,7 +63,9 @@ export class Logger<
       params: this.prepareParams(params),
       tag: this.setup.tag,
     };
-    this.setup.notifier.notify(this.setup.delegate.prepareLogData(data));
+    this.setup.notifier.notify(
+      this.setup.delegate.prepareLogData({data, globalData: this.setup.globalData}),
+    );
   }
 
   private prepareParams(params: LogParams | undefined): LogParams {

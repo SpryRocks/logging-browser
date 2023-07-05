@@ -22,8 +22,11 @@ class Delegate<TLogData extends LogData, TGlobalData extends object | undefined>
 {
   constructor(private readonly setup: LoggerFactorySetup<TLogData, TGlobalData>) {}
 
-  prepareLogData(data: LogData): TLogData {
-    return this.setup.prepareLogData({data, globalData: this.setup.globalData});
+  prepareLogData(options: {data: LogData; globalData: TGlobalData}): TLogData {
+    return this.setup.prepareLogData({
+      data: options.data,
+      globalData: {...this.setup.globalData, ...options.globalData},
+    });
   }
 }
 
