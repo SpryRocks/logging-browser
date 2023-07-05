@@ -11,7 +11,8 @@ import {
 
 export class LoggerFactory<
   TLogData extends LogData = LogData,
-> extends CoreLoggerFactory<TLogData> {}
+  TGlobalParams extends object | undefined = undefined,
+> extends CoreLoggerFactory<TLogData, TGlobalParams> {}
 
 export {
   ILoggerFactory,
