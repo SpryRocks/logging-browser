@@ -4,6 +4,7 @@ import {
   ILoggerReceiver,
   LogData,
   LoggerObserver,
+  LogParams,
   LogType,
 } from '@spryrocks/logger-plugin-observer';
 
@@ -18,4 +19,5 @@ export {
   ILoggerReceiver,
   LogData,
   LogType,
+  LogParams,
 };
