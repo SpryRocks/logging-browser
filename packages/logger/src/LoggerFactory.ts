@@ -44,7 +44,7 @@ export class LoggerFactory<
     this.delegate = new Delegate<TLogData, TGlobalData>(setup);
   }
 
-  createLogger(tag?: string, options?: {globalData?: TGlobalData}): ILogger {
+  createLogger(tag?: string, options?: {globalData?: Partial<TGlobalData>}): ILogger {
     return new Logger({
       notifier: this.setup.notifier,
       tag,
