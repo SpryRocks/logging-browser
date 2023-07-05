@@ -3,39 +3,26 @@ import {Logger, LoggerDelegate} from './Logger';
 import {ILogger} from './ILogger';
 import {ILoggerFactory} from './ILoggerFactory';
 
-export type PrepareLogData<
-  TLogData extends LogData,
-  TGlobalParams extends object | undefined,
-> = (options: {data: LogData; globalPrams: TGlobalParams}) => TLogData;
+export type PrepareLogData<TLogData extends LogData> = (data: LogData) => TLogData;
 
-type LoggerFactorySetup<
-  TLogData extends LogData,
-  TGlobalParams extends object | undefined,
-> = {
+type LoggerFactorySetup<TLogData extends LogData> = {
   notifier: ILoggerNotifier<TLogData>;
-  prepareLogData: PrepareLogData<TLogData, TGlobalParams>;
-  globalParams: TGlobalParams;
+  prepareLogData: PrepareLogData<TLogData>;
 };
 
-class Delegate<TLogData extends LogData, TGlobalParams extends object | undefined>
-  implements LoggerDelegate<TLogData>
-{
-  constructor(private readonly setup: LoggerFactorySetup<TLogData, TGlobalParams>) {}
+class Delegate<TLogData extends LogData> implements LoggerDelegate<TLogData> {
+  constructor(private readonly setup: LoggerFactorySetup<TLogData>) {}
 
   prepareLogData(data: LogData): TLogData {
-    return this.setup.prepareLogData({data, globalPrams: this.setup.globalParams});
+    return this.setup.prepareLogData(data);
   }
 }
 
-export class LoggerFactory<
-  TLogData extends LogData = LogData,
-  TGlobalParams extends object | undefined = undefined,
-> implements ILoggerFactory
-{
-  private readonly delegate: Delegate<TLogData, TGlobalParams>;
+export class LoggerFactory<TLogData extends LogData = LogData> implements ILoggerFactory {
+  private readonly delegate: Delegate<TLogData>;
 
-  constructor(private readonly setup: LoggerFactorySetup<TLogData, TGlobalParams>) {
-    this.delegate = new Delegate<TLogData, TGlobalParams>(setup);
+  constructor(private readonly setup: LoggerFactorySetup<TLogData>) {
+    this.delegate = new Delegate<TLogData>(setup);
   }
 
   createLogger(tag?: string): ILogger {
