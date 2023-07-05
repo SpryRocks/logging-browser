@@ -3,7 +3,7 @@ import {
   ILoggerReceiver as CoreILoggerReceiver,
   LoggerObserver as CoreLoggerObserver,
 } from '@spryrocks/logger-observer';
-import {LogData} from '@spryrocks/logger-plugin-core';
+import {LogData, LogParams, LogType} from '@spryrocks/logger-plugin-core';
 
 export interface ILoggerObserver<TLogData extends LogData = LogData>
   extends CoreILoggerObserver<TLogData> {}
@@ -15,4 +15,4 @@ export class LoggerObserver<
   TLogData extends LogData = LogData,
 > extends CoreLoggerObserver<TLogData> {}
 
-export {LogData};
+export {LogData, LogParams, LogType};
