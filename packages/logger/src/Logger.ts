@@ -5,7 +5,10 @@ export interface LoggerDelegate<
   TLogData extends LogData,
   TGlobalData extends object | undefined,
 > {
-  prepareLogData(options: {data: LogData; globalData: TGlobalData}): TLogData;
+  prepareLogData(options: {
+    data: LogData;
+    globalData: Partial<TGlobalData> | undefined;
+  }): TLogData;
 }
 
 type LoggerSetup<TLogData extends LogData, TGlobalData extends object | undefined> = {
@@ -13,7 +16,7 @@ type LoggerSetup<TLogData extends LogData, TGlobalData extends object | undefine
   tag: string | undefined;
   logParams: LogParams | undefined;
   delegate: LoggerDelegate<TLogData, TGlobalData>;
-  globalData: TGlobalData;
+  globalData: Partial<TGlobalData> | undefined;
 };
 
 export class Logger<
