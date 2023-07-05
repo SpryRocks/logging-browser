@@ -7,6 +7,7 @@ import {
   LoggerObserver,
   LogParams,
   LogType,
+  MultipleNotifiers,
 } from '@spryrocks/logger-plugin-observer';
 
 export class LoggerFactory<
@@ -22,4 +23,5 @@ export {
   LogType,
   LogParams,
   ILoggerNotifier,
+  MultipleNotifiers,
 };
