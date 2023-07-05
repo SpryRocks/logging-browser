@@ -5,15 +5,20 @@ export interface LoggerDelegate<TLogData extends LogData> {
   prepareLogData(data: LogData): TLogData;
 }
 
-type LoggerSetup<TLogData extends LogData> = {
+type LoggerSetup<TLogData extends LogData, TGlobalData extends object | undefined> = {
   notifier: ILoggerNotifier<TLogData>;
   tag: string | undefined;
   logParams: LogParams | undefined;
   delegate: LoggerDelegate<TLogData>;
+  globalData: TGlobalData;
 };
 
-export class Logger<TLogData extends LogData> implements ILogger {
-  constructor(private readonly setup: LoggerSetup<TLogData>) {}
+export class Logger<
+  TLogData extends LogData,
+  TGlobalData extends object | undefined = undefined,
+> implements ILogger
+{
+  constructor(private readonly setup: LoggerSetup<TLogData, TGlobalData>) {}
 
   warning(message: string, params?: LogParams): void {
     this.notify(LogType.Warning, message, params);
@@ -37,6 +42,7 @@ export class Logger<TLogData extends LogData> implements ILogger {
       tag,
       logParams: options?.keepParams ? this.setup.logParams : undefined,
       delegate: this.setup.delegate,
+      globalData: this.setup.globalData,
     });
   }
 

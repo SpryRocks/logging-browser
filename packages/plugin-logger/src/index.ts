@@ -13,7 +13,8 @@ import {
 
 export class LoggerFactory<
   TLogData extends LogData = LogData,
-> extends CoreLoggerFactory<TLogData> {}
+  TGlobalData extends object | undefined = undefined,
+> extends CoreLoggerFactory<TLogData, TGlobalData> {}
 
 export {
   ILoggerFactory,
