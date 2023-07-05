@@ -18,7 +18,7 @@ type LoggerFactorySetup<
 };
 
 class Delegate<TLogData extends LogData, TGlobalData extends object | undefined>
-  implements LoggerDelegate<TLogData>
+  implements LoggerDelegate<TLogData, TGlobalData>
 {
   constructor(private readonly setup: LoggerFactorySetup<TLogData, TGlobalData>) {}
 
