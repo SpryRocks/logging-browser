@@ -1,16 +1,11 @@
 import {
-  LoggerFactory as CoreLoggerFactory,
-  ILogger,
-  ILoggerFactory,
-} from '@spryrocks/logging-browser-logger';
-import {
   ILoggerObserver as CoreILoggerObserver,
   ILoggerReceiver as CoreILoggerReceiver,
   LoggerObserver as CoreLoggerObserver,
-} from '@spryrocks/logging-browser-observer';
-import {LogData as CoreLogData} from '@spryrocks/logging-browser-core';
-
-export type LogData = CoreLogData & {plugin: string; action: string | undefined};
+  MultipleNotifiers as CoreMultipleNotifiers,
+  ILoggerNotifier,
+} from '@spryrocks/logger-observer';
+import {CoreLogData, LogData, LogParams, LogType} from '@spryrocks/logger-plugin-core';
 
 export interface ILoggerObserver<TLogData extends LogData = LogData>
   extends CoreILoggerObserver<TLogData> {}
@@ -22,8 +17,8 @@ export class LoggerObserver<
   TLogData extends LogData = LogData,
 > extends CoreLoggerObserver<TLogData> {}
 
-export class LoggerFactory<
+export class MultipleNotifiers<
   TLogData extends LogData = LogData,
-> extends CoreLoggerFactory<TLogData> {}
+> extends CoreMultipleNotifiers<TLogData> {}
 
-export {ILogger, ILoggerFactory};
+export {LogData, LogParams, LogType, ILoggerNotifier, CoreLogData};

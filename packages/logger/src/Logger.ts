@@ -1,18 +1,30 @@
 import {ILogger, TagOptions} from './ILogger';
-import {LogData, LogParams, LogType} from '@spryrocks/logging-browser-core';
-import {ILoggerNotifier} from '@spryrocks/logging-browser-observer';
+import {ILoggerNotifier, LogData, LogParams, LogType} from '@spryrocks/logger-observer';
 
-export type PrepareLogData<TLogData extends LogData> = (data: LogData) => TLogData;
+export interface LoggerDelegate<
+  TLogData extends LogData,
+  TGlobalData extends object | undefined,
+> {
+  prepareLogData(options: {
+    data: LogData;
+    globalData: Partial<TGlobalData> | undefined;
+  }): TLogData;
+}
 
-type LoggerOptions<TLogData extends LogData> = {
+type LoggerSetup<TLogData extends LogData, TGlobalData extends object | undefined> = {
   notifier: ILoggerNotifier<TLogData>;
-  prepareLogData: PrepareLogData<TLogData>;
   tag: string | undefined;
   logParams: LogParams | undefined;
+  delegate: LoggerDelegate<TLogData, TGlobalData>;
+  globalData: Partial<TGlobalData> | undefined;
 };
 
-export class Logger<TLogData extends LogData> implements ILogger {
-  constructor(private readonly options: LoggerOptions<TLogData>) {}
+export class Logger<
+  TLogData extends LogData,
+  TGlobalData extends object | undefined = undefined,
+> implements ILogger
+{
+  constructor(private readonly setup: LoggerSetup<TLogData, TGlobalData>) {}
 
   warning(message: string, params?: LogParams): void {
     this.notify(LogType.Warning, message, params);
@@ -32,16 +44,17 @@ export class Logger<TLogData extends LogData> implements ILogger {
 
   tag(tag: string, options?: TagOptions): ILogger {
     return new Logger({
-      notifier: this.options.notifier,
-      prepareLogData: this.options.prepareLogData,
+      notifier: this.setup.notifier,
       tag,
-      logParams: options?.keepParams ? this.options.logParams : undefined,
+      logParams: options?.keepParams ? this.setup.logParams : undefined,
+      delegate: this.setup.delegate,
+      globalData: this.setup.globalData,
     });
   }
 
   updateParams(params: LogParams): void {
-    this.options.logParams = {
-      ...this.options.logParams,
+    this.setup.logParams = {
+      ...this.setup.logParams,
       ...params,
     };
   }
@@ -51,14 +64,16 @@ export class Logger<TLogData extends LogData> implements ILogger {
       type,
       message,
       params: this.prepareParams(params),
-      tag: this.options.tag,
+      tag: this.setup.tag,
     };
-    this.options.notifier.notify(this.options.prepareLogData(data));
+    this.setup.notifier.notify(
+      this.setup.delegate.prepareLogData({data, globalData: this.setup.globalData}),
+    );
   }
 
   private prepareParams(params: LogParams | undefined): LogParams {
     return {
-      ...this.options.logParams,
+      ...this.setup.logParams,
       ...params,
     };
   }

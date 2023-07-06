@@ -1,5 +1,5 @@
 {
-  "name": "@spryrocks/logger-observer",
+  "name": "@spryrocks/logger-plugin-core",
   "version": "0.1.0",
   "description": "Logging browser interface",
   "main": "dist/plugin.cjs.js",
