@@ -6,8 +6,8 @@ import {
   ILoggerReceiver,
   LogData,
   LoggerObserver,
+  LogLevel,
   LogParams,
-  LogType,
   MultipleNotifiers,
 } from '@spryrocks/logger-plugin-observer';
 
@@ -22,7 +22,7 @@ export {
   LoggerObserver,
   ILoggerReceiver,
   LogData,
-  LogType,
+  LogLevel,
   LogParams,
   ILoggerNotifier,
   MultipleNotifiers,

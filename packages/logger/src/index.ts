@@ -5,6 +5,6 @@ export {
   LogData,
   LoggerObserver,
   ILoggerReceiver,
-  LogType,
+  LogLevel,
   MultipleNotifiers,
 } from '@spryrocks/logger-observer';

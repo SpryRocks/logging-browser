@@ -5,7 +5,7 @@ import {
   MultipleNotifiers as CoreMultipleNotifiers,
   ILoggerNotifier,
 } from '@spryrocks/logger-observer';
-import {CoreLogData, LogData, LogParams, LogType} from '@spryrocks/logger-plugin-core';
+import {CoreLogData, LogData, LogLevel, LogParams} from '@spryrocks/logger-plugin-core';
 
 export interface ILoggerObserver<TLogData extends LogData = LogData>
   extends CoreILoggerObserver<TLogData> {}
@@ -21,4 +21,4 @@ export class MultipleNotifiers<
   TLogData extends LogData = LogData,
 > extends CoreMultipleNotifiers<TLogData> {}
 
-export {LogData, LogParams, LogType, ILoggerNotifier, CoreLogData};
+export {LogData, LogParams, LogLevel, ILoggerNotifier, CoreLogData};

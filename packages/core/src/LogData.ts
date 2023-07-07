@@ -1,10 +1,11 @@
-import {LogType} from './LogType';
+import {LogLevel} from './LogLevel';
 
 export type LogParams = {[key: string]: unknown};
 
 export type LogData = {
-  type: LogType;
+  level: LogLevel;
   tag: string | undefined;
   message: string;
   params: LogParams;
+  error: unknown | undefined;
 };

@@ -1,5 +1,5 @@
 import {ILogger, TagOptions} from './ILogger';
-import {ILoggerNotifier, LogData, LogParams, LogType} from '@spryrocks/logger-observer';
+import {ILoggerNotifier, LogData, LogLevel, LogParams} from '@spryrocks/logger-observer';
 
 export interface LoggerDelegate<
   TLogData extends LogData,
@@ -27,19 +27,19 @@ export class Logger<
   constructor(private readonly setup: LoggerSetup<TLogData, TGlobalData>) {}
 
   warning(message: string, params?: LogParams): void {
-    this.notify(LogType.Warning, message, params);
+    this.notify(LogLevel.Warning, message, params);
   }
 
   debug(message: string, params?: LogParams) {
-    this.notify(LogType.Debug, message, params);
+    this.notify(LogLevel.Debug, message, params);
   }
 
   info(message: string, params?: LogParams): void {
-    this.notify(LogType.Info, message, params);
+    this.notify(LogLevel.Info, message, params);
   }
 
-  error(message: string, params?: LogParams): void {
-    this.notify(LogType.Error, message, params);
+  error(message: string, error?: unknown, params?: LogParams): void {
+    this.notify(LogLevel.Error, message, params, error);
   }
 
   tag(tag: string, options?: TagOptions): ILogger {
@@ -59,12 +59,18 @@ export class Logger<
     };
   }
 
-  private notify(type: LogType, message: string, params: LogParams | undefined) {
+  private notify(
+    level: LogLevel,
+    message: string,
+    params: LogParams | undefined,
+    error?: unknown,
+  ) {
     const data: LogData = {
-      type,
+      level,
       message,
       params: this.prepareParams(params),
       tag: this.setup.tag,
+      error,
     };
     this.setup.notifier.notify(
       this.setup.delegate.prepareLogData({data, globalData: this.setup.globalData}),
