@@ -38,8 +38,13 @@ export class Logger<
     this.notify(LogLevel.Info, message, params);
   }
 
-  error(message: string, error?: unknown, params?: LogParams): void {
-    this.notify(LogLevel.Error, message, params, error);
+  error(error?: unknown, message?: string, params?: LogParams): void {
+    this.notify(
+      LogLevel.Error,
+      message ?? this.prepareErrorMessage(error),
+      params,
+      error,
+    );
   }
 
   tag(tag: string, options?: TagOptions): ILogger {
@@ -82,5 +87,14 @@ export class Logger<
       ...this.setup.logParams,
       ...params,
     };
+  }
+
+  private prepareErrorMessage(error: unknown): string {
+    if (typeof error === 'object') {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const message = (error as any).message;
+      if (message) return message;
+    }
+    return 'Unknown error';
   }
 }
