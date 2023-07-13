@@ -66,7 +66,7 @@ export class Logger<
         case null:
           return undefined;
         case undefined:
-          return this.setup.logParams;
+          return {...this.setup.logParams};
         default:
           return setup.logParams;
       }
