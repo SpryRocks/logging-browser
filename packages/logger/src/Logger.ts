@@ -1,5 +1,6 @@
 import {ChildOptions, ILogger, TagOptions} from './ILogger';
 import {ILoggerNotifier, LogData, LogLevel, LogParams} from '@spryrocks/logger-observer';
+import {ILogFormatter} from './ILogFormatter';
 
 export interface LoggerDelegate<
   TLogData extends LogData,
@@ -120,10 +121,24 @@ export class Logger<
   }
 
   private prepareParams(params: LogParams | undefined): LogParams {
-    return {
+    return this.formatParams({
       ...this.setup.logParams,
       ...params,
-    };
+    });
+  }
+
+  private formatParams(params: LogParams): LogParams {
+    params = {...params};
+    for (const key in params) {
+      const param = params[key] as ILogFormatter;
+      const logFormatter = param.logFormatter;
+      if (logFormatter) {
+        if (logFormatter.formatObject) {
+          params[key] = logFormatter.formatObject();
+        }
+      }
+    }
+    return params;
   }
 
   private prepareErrorMessage(error: unknown): string {
