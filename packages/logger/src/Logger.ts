@@ -130,8 +130,10 @@ export class Logger<
   private formatParams(params: LogParams): LogParams {
     params = {...params};
     for (const key in params) {
-      const param = params[key] as ILogFormatter;
-      const logFormatter = param.logFormatter;
+      const param = params[key];
+      if (typeof param !== 'object') continue;
+      const param_ = param as ILogFormatter;
+      const logFormatter = param_.logFormatter;
       if (logFormatter) {
         if (logFormatter.formatObject) {
           params[key] = logFormatter.formatObject();
