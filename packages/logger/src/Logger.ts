@@ -1,6 +1,6 @@
 import {ChildOptions, ILogger, TagOptions} from './ILogger';
+import {ILogFormatter, LogFormatterOptions} from './ILogFormatter';
 import {ILoggerNotifier, LogData, LogLevel, LogParams} from '@spryrocks/logger-observer';
-import {ILogFormatter} from './ILogFormatter';
 
 export interface LoggerDelegate<
   TLogData extends LogData,
@@ -128,19 +128,48 @@ export class Logger<
   }
 
   private formatParams(params: LogParams): LogParams {
-    params = {...params};
+    return this.processParamObject(params) as LogParams;
+  }
+
+  private processParamArray(arr: Array<unknown>): Array<unknown> {
+    return arr.map((a) => this.processParam(a));
+  }
+
+  private processParam(param: unknown): unknown {
+    if (!param) return param;
+    if (typeof param === 'object') return this.processParamObject(param);
+    return param;
+  }
+
+  private processParamObject(param: object): object {
+    if (Array.isArray(param)) {
+      return this.processParamArray(param);
+    }
+    const param_ = param as ILogFormatter;
+    const logFormatter = param_.logFormatter;
+    if (logFormatter) {
+      const result = this.formatParamObjectWithFormatter(param, logFormatter);
+      if (result) return result;
+    }
+    const params = {...param};
     for (const key in params) {
+      // eslint-disable-next-line
+      // @ts-ignore
       const param = params[key];
-      if (typeof param !== 'object') continue;
-      const param_ = param as ILogFormatter;
-      const logFormatter = param_.logFormatter;
-      if (logFormatter) {
-        if (logFormatter.formatObject) {
-          params[key] = logFormatter.formatObject();
-        }
-      }
+      // eslint-disable-next-line
+      // @ts-ignore
+      params[key] = this.processParam(param);
     }
     return params;
+  }
+
+  private formatParamObjectWithFormatter(
+    _param: object,
+    logFormatter: LogFormatterOptions,
+  ): object | undefined {
+    if (logFormatter.formatObject) {
+      return this.processParamObject(logFormatter.formatObject());
+    }
   }
 
   private prepareErrorMessage(error: unknown): string {
