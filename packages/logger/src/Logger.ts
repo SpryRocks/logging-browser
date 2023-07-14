@@ -1,4 +1,4 @@
-import {ILogger, TagOptions} from './ILogger';
+import {ChildOptions, ILogger, TagOptions} from './ILogger';
 import {ILoggerNotifier, LogData, LogLevel, LogParams} from '@spryrocks/logger-observer';
 
 export interface LoggerDelegate<
@@ -47,13 +47,50 @@ export class Logger<
     );
   }
 
-  tag(tag: string, options?: TagOptions): ILogger {
+  private createChildLogger(setup: {
+    tag: string | undefined | null;
+    logParams: LogParams | undefined | null;
+  }): ILogger {
+    const tag = (() => {
+      switch (setup.tag) {
+        case null:
+          return undefined;
+        case undefined:
+          return this.setup.tag;
+        default:
+          return setup.tag;
+      }
+    })();
+    const logParams = (() => {
+      switch (setup.logParams) {
+        case null:
+          return undefined;
+        case undefined:
+          return {...this.setup.logParams};
+        default:
+          return setup.logParams;
+      }
+    })();
     return new Logger({
-      notifier: this.setup.notifier,
       tag,
-      logParams: options?.keepParams ? this.setup.logParams : undefined,
-      delegate: this.setup.delegate,
+      logParams,
       globalData: this.setup.globalData,
+      delegate: this.setup.delegate,
+      notifier: this.setup.notifier,
+    });
+  }
+
+  tag(tag: string, options?: TagOptions) {
+    return this.createChildLogger({
+      tag,
+      logParams: options?.keepParams ? this.setup.logParams : null,
+    });
+  }
+
+  child(options?: ChildOptions) {
+    return this.createChildLogger({
+      tag: undefined,
+      logParams: options?.keepParams ? this.setup.logParams : null,
     });
   }
 
