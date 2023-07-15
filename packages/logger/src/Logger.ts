@@ -169,7 +169,7 @@ export class Logger<
     }
     if (logFormatter.excludeFields) {
       let excludeFields = logFormatter.excludeFields as string[];
-      const result = {...param};
+      const result = {};
       for (const key in result) {
         if (excludeFields.includes(key)) continue;
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
