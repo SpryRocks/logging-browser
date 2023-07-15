@@ -145,7 +145,7 @@ export class Logger<
     if (Array.isArray(param)) {
       return this.processParamArray(param);
     }
-    const param_ = param as ILogFormatter;
+    const param_ = param as ILogFormatter<unknown>;
     const logFormatter = param_.logFormatter;
     if (logFormatter) {
       const result = this.formatParamObjectWithFormatter(param, logFormatter);
@@ -155,20 +155,28 @@ export class Logger<
     for (const key in params) {
       // eslint-disable-next-line
       // @ts-ignore
-      const param = params[key];
-      // eslint-disable-next-line
-      // @ts-ignore
-      params[key] = this.processParam(param);
+      params[key] = this.processParam(params[key]);
     }
     return params;
   }
 
   private formatParamObjectWithFormatter(
-    _param: object,
-    logFormatter: LogFormatterOptions,
+    param: object,
+    logFormatter: LogFormatterOptions<unknown>,
   ): object | undefined {
     if (logFormatter.formatObject) {
       return this.processParamObject(logFormatter.formatObject());
+    }
+    if (logFormatter.excludeFields) {
+      let excludeFields = logFormatter.excludeFields as string[];
+      const result = {...param};
+      for (const key in result) {
+        if (excludeFields.includes(key)) continue;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        result[key] = this.processParam(param[key]);
+      }
+      return result;
     }
   }
 

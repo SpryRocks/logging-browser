@@ -1,7 +1,8 @@
-export type LogFormatterOptions = {
+export type LogFormatterOptions<TSource> = {
+  excludeFields?: (keyof TSource)[];
   formatObject?: () => object;
 };
 
-export interface ILogFormatter {
-  get logFormatter(): LogFormatterOptions;
+export interface ILogFormatter<TSource> {
+  get logFormatter(): LogFormatterOptions<TSource>;
 }
