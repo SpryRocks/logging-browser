@@ -8,3 +8,4 @@ export {
   LogLevel,
   MultipleNotifiers,
 } from '@spryrocks/logger-observer';
+export {ILogFormatter, LogFormatterOptions} from './ILogFormatter';

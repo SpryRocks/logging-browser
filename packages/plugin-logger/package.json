@@ -1,6 +1,6 @@
 {
   "name": "@spryrocks/logger-plugin",
-  "version": "0.1.2-alpha.1",
+  "version": "0.1.4",
   "description": "Logging browser interface",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -19,8 +19,8 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@spryrocks/logger": "^0.1.2-alpha.1",
-    "@spryrocks/logger-plugin-observer": "^0.1.2-alpha.0"
+    "@spryrocks/logger": "^0.1.4",
+    "@spryrocks/logger-plugin-observer": "^0.1.4"
   },
   "devDependencies": {
     "@spryrocks/eslint-config": "^0.2.8-alpha.0",
@@ -31,5 +31,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "35f241097f95cdb5ce9ec6a198392142e93efb4a"
+  "gitHead": "44f0547f1fc55ba7c081290b0948d6a87e91e0da"
 }
