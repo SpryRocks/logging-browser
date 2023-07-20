@@ -1,4 +1,4 @@
-export {ILogger} from './ILogger';
+export {ILogger, ChildOptions, TagOptions} from './ILogger';
 export {ILoggerFactory} from './ILoggerFactory';
 export {LoggerFactory} from './LoggerFactory';
 export {
@@ -7,5 +7,6 @@ export {
   ILoggerReceiver,
   LogLevel,
   MultipleNotifiers,
+  LogParams,
 } from '@spryrocks/logger-observer';
 export {ILogFormatter, LogFormatterOptions} from './ILogFormatter';
