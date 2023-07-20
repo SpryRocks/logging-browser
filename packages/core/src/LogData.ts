@@ -6,6 +6,6 @@ export type LogData = {
   level: LogLevel;
   tag: string | undefined;
   message: string;
-  params: LogParams;
+  params: LogParams | undefined;
   error: unknown | undefined;
 };

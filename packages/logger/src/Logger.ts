@@ -120,7 +120,8 @@ export class Logger<
     );
   }
 
-  private prepareParams(params: LogParams | undefined): LogParams {
+  private prepareParams(params: LogParams | undefined): LogParams | undefined {
+    if (!this.setup.logParams && !params) return undefined;
     return this.formatParams({
       ...this.setup.logParams,
       ...params,
