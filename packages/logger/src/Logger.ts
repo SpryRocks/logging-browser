@@ -27,18 +27,6 @@ export class Logger<
 {
   constructor(private readonly setup: LoggerSetup<TLogData, TGlobalData>) {}
 
-  warning(message: string, params?: LogParams): void {
-    this.notify(LogLevel.Warning, message, params);
-  }
-
-  debug(message: string, params?: LogParams) {
-    this.notify(LogLevel.Debug, message, params);
-  }
-
-  info(message: string, params?: LogParams): void {
-    this.notify(LogLevel.Info, message, params);
-  }
-
   error(error?: unknown, message?: string, params?: LogParams): void {
     this.notify(
       LogLevel.Error,
@@ -46,6 +34,22 @@ export class Logger<
       params,
       error,
     );
+  }
+
+  warning(message: string, params?: LogParams): void {
+    this.notify(LogLevel.Warning, message, params);
+  }
+
+  info(message: string, params?: LogParams): void {
+    this.notify(LogLevel.Info, message, params);
+  }
+
+  debug(message: string, params?: LogParams) {
+    this.notify(LogLevel.Debug, message, params);
+  }
+
+  trace(message: string, params?: LogParams) {
+    this.notify(LogLevel.Trace, message, params);
   }
 
   private createChildLogger(setup: {
