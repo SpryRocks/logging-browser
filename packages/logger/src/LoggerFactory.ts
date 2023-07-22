@@ -33,6 +33,10 @@ class Delegate<TLogData extends LogData, TGlobalData extends object | undefined>
       globalData: {...this.setup.globalData, ...options.globalData},
     });
   }
+
+  getObjectFormatter(): LogObjectFormatter | undefined {
+    return this.setup.objectFormatter;
+  }
 }
 
 export class LoggerFactory<
@@ -46,13 +50,17 @@ export class LoggerFactory<
     this.delegate = new Delegate<TLogData, TGlobalData>(setup);
   }
 
-  createLogger(tag?: string, options?: {globalData?: Partial<TGlobalData>}): ILogger {
+  createLogger(
+    tag?: string,
+    options?: {globalData?: Partial<TGlobalData>; objectFormatter: LogObjectFormatter},
+  ): ILogger {
     return new Logger({
       notifier: this.setup.notifier,
       tag,
       logParams: undefined,
       delegate: this.delegate,
       globalData: options?.globalData,
+      objectFormatter: options?.objectFormatter,
     });
   }
 }
