@@ -1,4 +1,4 @@
-export type LogObjectFormatter = (value: object) => object;
+export type LogObjectFormatter = (data: object) => object;
 
 export type LogFormatterOptions<TSource> = {
   excludeFields?: (keyof TSource)[];
