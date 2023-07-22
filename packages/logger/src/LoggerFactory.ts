@@ -2,6 +2,7 @@ import {ILoggerNotifier, LogData} from '@spryrocks/logger-observer';
 import {Logger, LoggerDelegate} from './Logger';
 import {ILogger} from './ILogger';
 import {ILoggerFactory} from './ILoggerFactory';
+import {LogObjectFormatter} from './ILogFormatter';
 
 export type PrepareLogData<
   TLogData extends LogData,
@@ -15,6 +16,7 @@ type LoggerFactorySetup<
   notifier: ILoggerNotifier<TLogData>;
   prepareLogData: PrepareLogData<TLogData, TGlobalData>;
   globalData: TGlobalData;
+  objectFormatter: LogObjectFormatter | undefined;
 };
 
 class Delegate<TLogData extends LogData, TGlobalData extends object | undefined>

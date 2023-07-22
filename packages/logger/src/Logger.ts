@@ -1,5 +1,5 @@
 import {ChildOptions, ILogger, TagOptions} from './ILogger';
-import {ILogFormatter, LogFormatterOptions} from './ILogFormatter';
+import {ILogFormatter, LogFormatterOptions, LogObjectFormatter} from './ILogFormatter';
 import {ILoggerNotifier, LogData, LogLevel, LogParams} from '@spryrocks/logger-observer';
 
 export interface LoggerDelegate<
@@ -10,6 +10,7 @@ export interface LoggerDelegate<
     data: LogData;
     globalData: Partial<TGlobalData> | undefined;
   }): TLogData;
+  getObjectFormatter(): LogObjectFormatter | undefined;
 }
 
 type LoggerSetup<TLogData extends LogData, TGlobalData extends object | undefined> = {
@@ -18,6 +19,7 @@ type LoggerSetup<TLogData extends LogData, TGlobalData extends object | undefine
   logParams: LogParams | undefined;
   delegate: LoggerDelegate<TLogData, TGlobalData>;
   globalData: Partial<TGlobalData> | undefined;
+  objectFormatter: LogObjectFormatter | undefined;
 };
 
 export class Logger<
@@ -82,6 +84,7 @@ export class Logger<
       globalData: this.setup.globalData,
       delegate: this.setup.delegate,
       notifier: this.setup.notifier,
+      objectFormatter: this.setup.objectFormatter,
     });
   }
 
@@ -151,10 +154,16 @@ export class Logger<
       return this.processParamArray(param);
     }
     const param_ = param as ILogFormatter<unknown>;
-    const logFormatter = param_.logFormatter;
-    if (logFormatter) {
-      const result = this.formatParamObjectWithFormatter(param, logFormatter);
+    // format object with logFormatter
+    const ownLogFormatter = param_.logFormatter;
+    if (ownLogFormatter) {
+      const result = this.formatParamObjectWithOwnFormatter(param, ownLogFormatter);
       if (result) return result;
+    }
+    const globalLogFormatter =
+      this.setup.objectFormatter ?? this.setup.delegate.getObjectFormatter();
+    if (globalLogFormatter) {
+      return this.formatParamObjectWithGlobalFormatter(param, globalLogFormatter);
     }
     const params = {...param};
     for (const key in params) {
@@ -165,7 +174,7 @@ export class Logger<
     return params;
   }
 
-  private formatParamObjectWithFormatter(
+  private formatParamObjectWithOwnFormatter(
     param: object,
     logFormatter: LogFormatterOptions<unknown>,
   ): object | undefined {
@@ -183,6 +192,13 @@ export class Logger<
       }
       return result;
     }
+  }
+
+  private formatParamObjectWithGlobalFormatter(
+    param: object,
+    logFormatter: LogObjectFormatter,
+  ): object {
+    return this.processParamObject(logFormatter(param));
   }
 
   private prepareErrorMessage(error: unknown): string {
