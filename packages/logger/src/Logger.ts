@@ -19,7 +19,7 @@ type LoggerSetup<TLogData extends LogData, TGlobalData extends object | undefine
   logParams: LogParams | undefined;
   delegate: LoggerDelegate<TLogData, TGlobalData>;
   globalData: Partial<TGlobalData> | undefined;
-  objectFormatter: LogObjectFormatter | undefined;
+  objectFormatter?: LogObjectFormatter;
 };
 
 export class Logger<

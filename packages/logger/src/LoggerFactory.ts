@@ -16,7 +16,7 @@ type LoggerFactorySetup<
   notifier: ILoggerNotifier<TLogData>;
   prepareLogData: PrepareLogData<TLogData, TGlobalData>;
   globalData: TGlobalData;
-  objectFormatter: LogObjectFormatter | undefined;
+  objectFormatter?: LogObjectFormatter;
 };
 
 class Delegate<TLogData extends LogData, TGlobalData extends object | undefined>
