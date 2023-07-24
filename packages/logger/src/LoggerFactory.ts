@@ -2,6 +2,7 @@ import {ILoggerNotifier, LogData} from '@spryrocks/logger-observer';
 import {Logger, LoggerDelegate} from './Logger';
 import {ILogger} from './ILogger';
 import {ILoggerFactory} from './ILoggerFactory';
+import {LogObjectFormatter} from './ILogFormatter';
 
 export type PrepareLogData<
   TLogData extends LogData,
@@ -15,6 +16,7 @@ type LoggerFactorySetup<
   notifier: ILoggerNotifier<TLogData>;
   prepareLogData: PrepareLogData<TLogData, TGlobalData>;
   globalData: TGlobalData;
+  objectFormatter?: LogObjectFormatter;
 };
 
 class Delegate<TLogData extends LogData, TGlobalData extends object | undefined>
@@ -31,6 +33,10 @@ class Delegate<TLogData extends LogData, TGlobalData extends object | undefined>
       globalData: {...this.setup.globalData, ...options.globalData},
     });
   }
+
+  getObjectFormatter(): LogObjectFormatter | undefined {
+    return this.setup.objectFormatter;
+  }
 }
 
 export class LoggerFactory<
@@ -44,13 +50,17 @@ export class LoggerFactory<
     this.delegate = new Delegate<TLogData, TGlobalData>(setup);
   }
 
-  createLogger(tag?: string, options?: {globalData?: Partial<TGlobalData>}): ILogger {
+  createLogger(
+    tag?: string,
+    options?: {globalData?: Partial<TGlobalData>; objectFormatter: LogObjectFormatter},
+  ): ILogger {
     return new Logger({
       notifier: this.setup.notifier,
       tag,
       logParams: undefined,
       delegate: this.delegate,
       globalData: options?.globalData,
+      objectFormatter: options?.objectFormatter,
     });
   }
 }
