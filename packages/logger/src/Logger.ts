@@ -29,6 +29,7 @@ export class Logger<
 {
   constructor(private readonly setup: LoggerSetup<TLogData, TGlobalData>) {}
 
+  //region log methods
   error(error?: unknown, message?: string, params?: LogParams): void {
     this.notify(
       LogLevel.Error,
@@ -53,7 +54,9 @@ export class Logger<
   trace(message: string, params?: LogParams) {
     this.notify(LogLevel.Trace, message, params);
   }
+  //endregion
 
+  //region factory methods
   private createChildLogger(setup: {
     tag: string | undefined | null;
     logParams: LogParams | undefined | null;
@@ -101,14 +104,18 @@ export class Logger<
       logParams: options?.keepParams ? this.setup.logParams : null,
     });
   }
+  //endregion
 
+  //region setup methods
   updateParams(params: LogParams): void {
     this.setup.logParams = {
       ...this.setup.logParams,
       ...params,
     };
   }
+  //endregion
 
+  //region internal logic
   private notify(
     level: LogLevel,
     message: string,
@@ -134,7 +141,9 @@ export class Logger<
       ...params,
     });
   }
+  //endregion
 
+  //region object formatter
   private formatParams(params: LogParams): LogParams {
     return this.processParamObject(params) as LogParams;
   }
@@ -200,8 +209,11 @@ export class Logger<
   ): object {
     return this.processParamObject(logFormatter(param));
   }
+  //endregion
 
+  //region error formatter
   private prepareErrorMessage(error: unknown): string {
+    if (typeof error === 'string') return error;
     if (typeof error === 'object') {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const message = (error as any).message;
@@ -209,4 +221,5 @@ export class Logger<
     }
     return 'Unknown error';
   }
+  //endregion
 }
