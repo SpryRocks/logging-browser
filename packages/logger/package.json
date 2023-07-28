@@ -16,7 +16,8 @@
     "lint": "yarn run eslint",
     "build": "npm run clean && tsc && rollup -c rollup.config.js",
     "clean": "rimraf ./dist",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "jest ./test"
   },
   "dependencies": {
     "@spryrocks/logger-observer": "^0.1.8"
@@ -25,7 +26,10 @@
     "@spryrocks/eslint-config": "^0.2.8-alpha.0",
     "rimraf": "^5.0.1",
     "rollup": "^3.26.0",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "jest": "^29.6.2",
+    "ts-jest": "^29.1.1",
+    "@types/jest": "^29.5.3"
   },
   "publishConfig": {
     "access": "public"
