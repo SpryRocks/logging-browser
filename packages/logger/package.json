@@ -1,6 +1,6 @@
 {
   "name": "@spryrocks/logger",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Logging browser interface",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -20,16 +20,16 @@
     "test": "jest ./test"
   },
   "dependencies": {
-    "@spryrocks/logger-observer": "^0.1.8"
+    "@spryrocks/logger-observer": "^0.1.9"
   },
   "devDependencies": {
     "@spryrocks/eslint-config": "^0.2.8-alpha.0",
+    "@types/jest": "^29.5.3",
+    "jest": "^29.6.2",
     "rimraf": "^5.0.1",
     "rollup": "^3.26.0",
-    "typescript": "^5.1.6",
-    "jest": "^29.6.2",
     "ts-jest": "^29.1.1",
-    "@types/jest": "^29.5.3"
+    "typescript": "^5.1.6"
   },
   "publishConfig": {
     "access": "public"
