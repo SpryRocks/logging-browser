@@ -35,10 +35,14 @@ export class ObjectFormatter {
     if (globalLogFormatter) {
       return this.formatParamObjectWithGlobalFormatter(param, globalLogFormatter);
     }
-    const params = {...param};
+    return this.processObjectFields(param);
+  }
+
+  private processObjectFields(data: object) {
+    const params = {...data};
     for (const key in params) {
       // eslint-disable-next-line
-            // @ts-ignore
+      // @ts-ignore
       params[key] = this.processParam(params[key]);
     }
     return params;
@@ -49,7 +53,7 @@ export class ObjectFormatter {
     logFormatter: LogFormatterOptions<unknown>,
   ): object | undefined {
     if (logFormatter.formatObject) {
-      return this.processParamObject(logFormatter.formatObject());
+      return this.processObjectFields(logFormatter.formatObject());
     }
     if (logFormatter.excludeFields) {
       let excludeFields = logFormatter.excludeFields as string[];
@@ -68,6 +72,6 @@ export class ObjectFormatter {
     param: object,
     logFormatter: LogObjectFormatter,
   ): object {
-    return this.processParamObject(logFormatter(param));
+    return this.processObjectFields(logFormatter(param));
   }
 }
