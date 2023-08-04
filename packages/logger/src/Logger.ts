@@ -1,6 +1,7 @@
 import {ChildOptions, ILogger, TagOptions} from './ILogger';
-import {ILogFormatter, LogFormatterOptions, LogObjectFormatter} from './ILogFormatter';
 import {ILoggerNotifier, LogData, LogLevel, LogParams} from '@spryrocks/logger-observer';
+import {LogObjectFormatter} from './ILogFormatter';
+import {ObjectFormatter} from './ObjectFormatter';
 
 export interface LoggerDelegate<
   TLogData extends LogData,
@@ -27,7 +28,14 @@ export class Logger<
   TGlobalData extends object | undefined = undefined,
 > implements ILogger
 {
-  constructor(private readonly setup: LoggerSetup<TLogData, TGlobalData>) {}
+  private readonly objectFormatter: ObjectFormatter;
+
+  constructor(private readonly setup: LoggerSetup<TLogData, TGlobalData>) {
+    this.objectFormatter = new ObjectFormatter({
+      objectFormatter: setup.objectFormatter,
+      getGlobalObjectFormatters: () => setup.delegate.getObjectFormatter(),
+    });
+  }
 
   //region log methods
   error(error?: unknown, message?: string, params?: LogParams): void {
@@ -141,73 +149,9 @@ export class Logger<
       ...params,
     });
   }
-  //endregion
 
-  //region object formatter
   private formatParams(params: LogParams): LogParams {
-    return this.processParamObject(params) as LogParams;
-  }
-
-  private processParamArray(arr: Array<unknown>): Array<unknown> {
-    return arr.map((a) => this.processParam(a));
-  }
-
-  private processParam(param: unknown): unknown {
-    if (!param) return param;
-    if (typeof param === 'object') return this.processParamObject(param);
-    return param;
-  }
-
-  private processParamObject(param: object): object {
-    if (Array.isArray(param)) {
-      return this.processParamArray(param);
-    }
-    const param_ = param as ILogFormatter<unknown>;
-    // format object with logFormatter
-    const ownLogFormatter = param_.logFormatter;
-    if (ownLogFormatter) {
-      const result = this.formatParamObjectWithOwnFormatter(param, ownLogFormatter);
-      if (result) return result;
-    }
-    const globalLogFormatter =
-      this.setup.objectFormatter ?? this.setup.delegate.getObjectFormatter();
-    if (globalLogFormatter) {
-      return this.formatParamObjectWithGlobalFormatter(param, globalLogFormatter);
-    }
-    const params = {...param};
-    for (const key in params) {
-      // eslint-disable-next-line
-      // @ts-ignore
-      params[key] = this.processParam(params[key]);
-    }
-    return params;
-  }
-
-  private formatParamObjectWithOwnFormatter(
-    param: object,
-    logFormatter: LogFormatterOptions<unknown>,
-  ): object | undefined {
-    if (logFormatter.formatObject) {
-      return this.processParamObject(logFormatter.formatObject());
-    }
-    if (logFormatter.excludeFields) {
-      let excludeFields = logFormatter.excludeFields as string[];
-      const result = {};
-      for (const key in result) {
-        if (excludeFields.includes(key)) continue;
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        result[key] = this.processParam(param[key]);
-      }
-      return result;
-    }
-  }
-
-  private formatParamObjectWithGlobalFormatter(
-    param: object,
-    logFormatter: LogObjectFormatter,
-  ): object {
-    return this.processParamObject(logFormatter(param));
+    return this.objectFormatter.processParamObject(params) as LogParams;
   }
   //endregion
 
