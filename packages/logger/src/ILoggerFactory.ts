@@ -1,7 +1,7 @@
 import {ILogger} from './ILogger';
 import {LogObjectFormatter} from './ILogFormatter';
 
-export type CreateLoggerOptions<TGlobalData> = {
+export type CreateLoggerOptions<TGlobalData = unknown> = {
   globalData?: Partial<TGlobalData>;
   objectFormatter?: LogObjectFormatter;
 };
