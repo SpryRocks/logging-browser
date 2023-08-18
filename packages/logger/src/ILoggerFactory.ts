@@ -1,5 +1,11 @@
 import {ILogger} from './ILogger';
+import {LogObjectFormatter} from './ILogFormatter';
 
-export interface ILoggerFactory {
-  createLogger(tag?: string): ILogger;
+export type CreateLoggerOptions<TGlobalData> = {
+  globalData?: Partial<TGlobalData>;
+  objectFormatter?: LogObjectFormatter;
+};
+
+export interface ILoggerFactory<TGlobalData> {
+  createLogger(tag?: string, options?: CreateLoggerOptions<TGlobalData>): ILogger;
 }
