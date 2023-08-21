@@ -1,6 +1,6 @@
 {
   "name": "@spryrocks/logger",
-  "version": "0.1.14-alpha.0",
+  "version": "0.1.14-alpha.1",
   "description": "Logging browser interface",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -19,7 +19,7 @@
     "test": "jest ./test"
   },
   "dependencies": {
-    "@spryrocks/logger-observer": "^0.1.14-alpha.0"
+    "@spryrocks/logger-observer": "^0.1.14-alpha.1"
   },
   "devDependencies": {
     "@spryrocks/eslint-config": "^0.2.8-alpha.0",
