@@ -1,6 +1,6 @@
 {
   "name": "@spryrocks/logger-observer",
-  "version": "0.1.9",
+  "version": "0.1.14",
   "description": "Logging browser interface",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
@@ -11,15 +11,14 @@
   ],
   "author": "Maxim Zhemerenko",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "lint": "yarn run eslint",
-    "build": "npm run clean && tsc && rollup -c rollup.config.js",
+    "build": "npm run clean && tsc && rollup -c rollup.config.mjs",
     "clean": "rimraf ./dist",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@spryrocks/logger-core": "^0.1.9"
+    "@spryrocks/logger-core": "^0.1.14"
   },
   "devDependencies": {
     "@spryrocks/eslint-config": "^0.2.8-alpha.0",
@@ -30,5 +29,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "a77df213f73392fe5467bb1c27b288ecd0a526a5"
+  "gitHead": "1f42e483ab986ce796f07ff7ab3e1013aabe6873"
 }
