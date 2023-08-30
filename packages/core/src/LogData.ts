@@ -1,3 +1,4 @@
+import {ErrorLevel} from './ErrorLevel';
 import {LogLevel} from './LogLevel';
 
 export type LogParams = {[key: string]: unknown};
@@ -8,4 +9,5 @@ export type LogData = {
   message: string;
   params: LogParams | undefined;
   error: unknown | undefined;
+  errorLevel: ErrorLevel | undefined;
 };

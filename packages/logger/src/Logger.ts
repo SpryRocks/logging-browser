@@ -1,5 +1,11 @@
-import {ChildOptions, ILogger, TagOptions} from './ILogger';
-import {ILoggerNotifier, LogData, LogLevel, LogParams} from '@spryrocks/logger-observer';
+import {ChildOptions, ErrorOptions, ILogger, TagOptions} from './ILogger';
+import {
+  ErrorLevel,
+  ILoggerNotifier,
+  LogData,
+  LogLevel,
+  LogParams,
+} from '@spryrocks/logger-observer';
 import {LogObjectFormatter} from './ILogFormatter';
 import {ObjectFormatter} from './ObjectFormatter';
 
@@ -38,29 +44,35 @@ export class Logger<
   }
 
   //region log methods
-  error(error?: unknown, message?: string, params?: LogParams): void {
+  error(
+    error?: unknown,
+    message?: string,
+    options?: ErrorOptions,
+    params?: LogParams,
+  ): void {
     this.notify(
       LogLevel.Error,
       message ?? this.prepareErrorMessage(error),
       params,
       error,
+      options?.level,
     );
   }
 
   warning(message: string, params?: LogParams): void {
-    this.notify(LogLevel.Warning, message, params);
+    this.notify(LogLevel.Warning, message, params, undefined, undefined);
   }
 
   info(message: string, params?: LogParams): void {
-    this.notify(LogLevel.Info, message, params);
+    this.notify(LogLevel.Info, message, params, undefined, undefined);
   }
 
   debug(message: string, params?: LogParams) {
-    this.notify(LogLevel.Debug, message, params);
+    this.notify(LogLevel.Debug, message, params, undefined, undefined);
   }
 
   trace(message: string, params?: LogParams) {
-    this.notify(LogLevel.Trace, message, params);
+    this.notify(LogLevel.Trace, message, params, undefined, undefined);
   }
   //endregion
 
@@ -128,7 +140,8 @@ export class Logger<
     level: LogLevel,
     message: string,
     params: LogParams | undefined,
-    error?: unknown,
+    error: unknown | undefined,
+    errorLevel: ErrorLevel | undefined,
   ) {
     const data: LogData = {
       level,
@@ -136,6 +149,7 @@ export class Logger<
       params: this.prepareParams(params),
       tag: this.setup.tag,
       error,
+      errorLevel,
     };
     this.setup.notifier.notify(
       this.setup.delegate.prepareLogData({data, globalData: this.setup.globalData}),
