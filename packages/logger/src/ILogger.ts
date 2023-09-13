@@ -1,11 +1,18 @@
-import {LogParams} from '@spryrocks/logger-observer';
+import {ErrorLevel, LogParams} from '@spryrocks/logger-observer';
 
 export type TagOptions = {keepParams?: boolean};
 
 export type ChildOptions = {keepParams?: boolean};
 
+export type ErrorOptions = {level?: ErrorLevel};
+
 export interface ILogger {
-  error(error: unknown, message?: string, params?: LogParams): void;
+  error(
+    error: unknown,
+    message?: string,
+    options?: ErrorOptions,
+    params?: LogParams,
+  ): void;
   warning(message: string, params?: LogParams): void;
   info(message: string, params?: LogParams): void;
   debug(message: string, params?: LogParams): void;

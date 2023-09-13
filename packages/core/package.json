@@ -1,6 +1,6 @@
 {
   "name": "@spryrocks/logger-core",
-  "version": "0.1.14",
+  "version": "0.1.15-alpha.0",
   "description": "Logging browser interface",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
