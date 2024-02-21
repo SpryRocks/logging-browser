@@ -4,7 +4,7 @@ import {LogData} from '@spryrocks/logger-core';
 export class LoggerFilters<TLogData extends LogData>
   implements ILoggerFilters<TLogData>, ILoggerFiltersTester<TLogData>
 {
-  private readonly filters = new Array<LoggerFilter<TLogData>>();
+  private filters: LoggerFilter<TLogData>[] = [];
 
   add(filter: LoggerFilter<TLogData>) {
     this.filters.push(filter);
@@ -14,6 +14,10 @@ export class LoggerFilters<TLogData extends LogData>
     const index = this.filters.indexOf(filter);
     if (index < 0) return;
     this.filters.splice(index, 1);
+  }
+
+  clear() {
+    this.filters = [];
   }
 
   test(data: TLogData) {
