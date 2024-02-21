@@ -16,5 +16,7 @@ export {
   LogLevel,
   LogParams,
   MultipleNotifiers,
+  ILoggerFilters,
+  LoggerFilters,
 } from '@spryrocks/logger-plugin-observer';
 export {LogData};
