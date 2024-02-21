@@ -1,6 +1,8 @@
 import {
+  ILoggerFilters as CoreILoggerFilters,
   ILoggerObserver as CoreILoggerObserver,
   ILoggerReceiver as CoreILoggerReceiver,
+  LoggerFilters as CoreLoggerFilters,
   LoggerObserver as CoreLoggerObserver,
   MultipleNotifiers as CoreMultipleNotifiers,
   ILoggerNotifier,
@@ -20,5 +22,12 @@ export class LoggerObserver<
 export class MultipleNotifiers<
   TLogData extends LogData = LogData,
 > extends CoreMultipleNotifiers<TLogData> {}
+
+export interface ILoggerFilters<TLogData extends LogData = LogData>
+  extends CoreILoggerFilters<TLogData> {}
+
+export class LoggerFilters<
+  TLogData extends LogData = LogData,
+> extends CoreLoggerFilters<TLogData> {}
 
 export {LogData, LogParams, LogLevel, ILoggerNotifier, CoreLogData};
