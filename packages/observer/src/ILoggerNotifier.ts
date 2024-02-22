@@ -4,5 +4,4 @@ export type LogNotifierFilter<TLogData extends LogData> = (data: TLogData) => bo
 
 export interface ILoggerNotifier<TLogData extends LogData = LogData> {
   notify(data: TLogData): boolean;
-  set filter(filter: LogNotifierFilter<TLogData>);
 }

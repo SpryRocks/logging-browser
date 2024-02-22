@@ -1,17 +1,21 @@
 import {ILoggerNotifier, LogNotifierFilter} from './ILoggerNotifier';
 import {LogData} from '@spryrocks/logger-core';
 
+export type LoggerNotifierBaseOptions<TLogData extends LogData> = {
+  filter?: LogNotifierFilter<TLogData>;
+};
+
 export abstract class LoggerNotifierBase<TLogData extends LogData>
   implements ILoggerNotifier<TLogData>
 {
-  private _filter: LogNotifierFilter<TLogData> | undefined;
+  private readonly _filter: LogNotifierFilter<TLogData> | undefined;
+
+  constructor(options: LoggerNotifierBaseOptions<TLogData>) {
+    this._filter = options.filter;
+  }
 
   notify(data: TLogData) {
     return this.test(data);
-  }
-
-  set filter(filter: LogNotifierFilter<TLogData>) {
-    this._filter = filter;
   }
 
   private test(data: TLogData): boolean {

@@ -1,12 +1,20 @@
+import {LoggerNotifierBase, LoggerNotifierBaseOptions} from './LoggerNotifierBase';
 import {ILoggerNotifier} from './ILoggerNotifier';
 import {LogData} from '@spryrocks/logger-core';
-import {LoggerNotifierBase} from './LoggerNotifierBase';
+
+export type MultipleNotifiersOptions<TLogData extends LogData> =
+  LoggerNotifierBaseOptions<TLogData> & {
+    notifiers: Array<ILoggerNotifier<TLogData>>;
+  };
 
 export class MultipleNotifiers<
   TLogData extends LogData = LogData,
 > extends LoggerNotifierBase<TLogData> {
-  constructor(private readonly notifiers: Array<ILoggerNotifier<TLogData>>) {
-    super();
+  private readonly notifiers: Array<ILoggerNotifier<TLogData>>;
+
+  constructor(options: MultipleNotifiersOptions<TLogData>) {
+    super(options);
+    this.notifiers = options.notifiers;
   }
 
   override notify(data: TLogData) {
