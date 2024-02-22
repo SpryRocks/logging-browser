@@ -10,8 +10,8 @@ export abstract class LoggerNotifierBase<TLogData extends LogData>
 {
   private readonly _filter: LogNotifierFilter<TLogData> | undefined;
 
-  constructor(options: LoggerNotifierBaseOptions<TLogData>) {
-    this._filter = options.filter;
+  constructor(options?: LoggerNotifierBaseOptions<TLogData>) {
+    this._filter = options?.filter;
   }
 
   notify(data: TLogData) {
