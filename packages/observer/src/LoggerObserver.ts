@@ -1,10 +1,11 @@
-import {ILoggerNotifier} from './ILoggerNotifier';
 import {ILoggerObserver} from './ILoggerObserver';
 import {ILoggerReceiver} from './ILoggerReceiver';
 import {LogData} from '@spryrocks/logger-core';
+import {LoggerNotifierBase} from './LoggerNotifierBase';
 
 export class LoggerObserver<TLogData extends LogData = LogData>
-  implements ILoggerObserver<TLogData>, ILoggerNotifier<TLogData>
+  extends LoggerNotifierBase<TLogData>
+  implements ILoggerObserver<TLogData>
 {
   private readonly receivers: ILoggerReceiver<TLogData>[] = [];
 
@@ -12,7 +13,8 @@ export class LoggerObserver<TLogData extends LogData = LogData>
     this.receivers.push(logger);
   }
 
-  notify(data: TLogData) {
+  override notify(data: TLogData) {
+    if (!super.notify(data)) return false;
     for (let receiver of this.receivers) {
       if (receiver.onLogReceived(data)) return true;
     }
